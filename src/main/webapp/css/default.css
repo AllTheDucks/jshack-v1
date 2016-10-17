@@ -1,0 +1,37 @@
+/* 
+    Document   : default
+    Created on : 17/10/2012, 3:21:41 PM
+    Author     : Wiley Fuller <wfuller@swin.edu.au>
+    Description:
+        Purpose of the stylesheet follows.
+*/
+
+#editorContainer {
+  position: relative;
+  height: 20em;
+  width: 50em;
+  border: 1px solid lightgray;
+  border-radius: .25em;
+}
+
+#snippetEditor { 
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+}
+
+.jsh-resourceDiv {
+  border: 1px solid lightsteelblue; 
+  border-radius: .25em; 
+  background-color: lightsteelblue; 
+  padding: .25em;
+  padding-right: .75em;
+  width: 45em;
+  margin-bottom: .3em;
+}
+
+.disabledIcon {
+  margin-right: 1em;
+}
