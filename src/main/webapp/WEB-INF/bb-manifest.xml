@@ -100,6 +100,10 @@
 
       <permission type="java.lang.RuntimePermission" name="injectRenderingHook" />
 
+      <!-- Logging Permissions -->
+      <permission type="java.io.FilePermission" name="BB_HOME/logs/plugins/-"
+                  actions="write" />
+
       <!--<permission type="java.io.FilePermission" name="velocity.log" actions="write" />-->
     </permissions>
   </plugin>

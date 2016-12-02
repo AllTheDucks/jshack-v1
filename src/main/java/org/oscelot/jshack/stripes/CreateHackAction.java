@@ -9,6 +9,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+
 import net.sourceforge.stripes.action.ActionBean;
 import net.sourceforge.stripes.action.ActionBeanContext;
 import net.sourceforge.stripes.action.Before;
@@ -32,6 +33,8 @@ import org.oscelot.jshack.JSHackManagerFactory;
 import org.oscelot.jshack.model.HackPackage;
 import org.oscelot.jshack.model.HackResource;
 import org.oscelot.jshack.model.Restriction;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  *
@@ -39,6 +42,8 @@ import org.oscelot.jshack.model.Restriction;
  */
 @EntitlementRestrictions(entitlements={"system.jshacks.CREATE"}, errorPage="/noaccess.jsp")
 public class CreateHackAction implements ActionBean {
+
+    private static final Logger logger = LoggerFactory.getLogger(CreateHackAction.class);
 
     private static final String DEFAULT_SNIPPET = "<!-- This snippet binds a function to the \"dom:loaded\" event.\n"
             + "You can put your own javascript into the function, or replace\n"
@@ -115,8 +120,11 @@ public class CreateHackAction implements ActionBean {
         if (tempFiles == null) {
             tempFiles = new ArrayList<String>();
         }
-        for (int i = tempFiles.size(); i < hack.getResources().size(); i++) {
-            tempFiles.add(null);
+
+        if(hack.getResources() != null) {
+            for (int i = tempFiles.size(); i < hack.getResources().size(); i++) {
+                tempFiles.add(null);
+            }
         }
 
         if (resourceFiles != null) {
