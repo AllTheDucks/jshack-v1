@@ -13,6 +13,8 @@ import java.io.StringWriter;
 import java.util.Collection;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import org.apache.commons.lang.exception.ExceptionUtils;
 import org.apache.velocity.VelocityContext;
 import org.apache.velocity.app.Velocity;
 import org.apache.velocity.app.VelocityEngine;
@@ -39,21 +41,30 @@ public abstract class JSHackRenderingHook implements RenderingHook {
         HackPackage currPkg = null;
         try {
             hackManager = getHackManager();
-            StringBuilder output = new StringBuilder();
+            final StringBuilder output = new StringBuilder();
 
-            Context context = ContextManagerFactory.getInstance().getContext();
+            final Context context = ContextManagerFactory.getInstance().getContext();
             if (context == null) {
                 return "";
             }
 
-            Collection<HackPackage> packages = hackManager.getMatchingHacks(this.getKey(), context);
+            final Collection<HackPackage> packages = hackManager.getMatchingHacks(this.getKey(), context);
 
             if (packages != null) {
                 for (HackPackage hackPackage : packages) {
-                    StringBuilder sb = new StringBuilder("\n<!-- START HACK : ");
+                    currPkg = hackPackage;
+
+                    final StringBuilder sb = new StringBuilder("\n<!-- START HACK : ");
                     sb.append(hackPackage.getIdentifier());
                     sb.append(" -->\n");
-                    sb.append(renderSnippet(hackPackage, hackPackage.getSnippet(), context));
+                    try {
+                        sb.append(renderSnippet(hackPackage, hackPackage.getSnippet(), context));
+                    } catch (Exception e) {
+                        sb.append("\n<!-- Error rendering hack: \n");
+                        sb.append(e.getMessage());
+                        sb.append(" -->\n");
+
+                    }
                     sb.append("\n<!-- END HACK : ");
                     sb.append(hackPackage.getIdentifier());
                     sb.append(" -->\n");
@@ -97,7 +108,7 @@ public abstract class JSHackRenderingHook implements RenderingHook {
         StringWriter sw = new StringWriter();
 
         try {
-            ve.evaluate(vc, sw, "StudentViewHtmlString", snippet);
+            ve.evaluate(vc, sw, "SnippetHtmlString", snippet);
         } catch (IOException ex) {
             Logger.getLogger(JSHackRenderingHook.class.getName()).log(Level.SEVERE, null, ex);
             return "Error in JSHackRenderingHook. See Log for details. (" + ex.getMessage() + ")";
