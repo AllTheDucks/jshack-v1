@@ -10,7 +10,7 @@
     <description value="jsh.plugin.description"/>
     <default-locale value="en_GB" />
     <webapp-type value="javaext" />
-    <version value="1.0.5"/>
+    <version value="1.0.6"/>
     <requires>
       <bbversion value="9.1"/>
     </requires>
