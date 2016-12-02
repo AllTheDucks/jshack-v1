@@ -1,59 +1,65 @@
-
 apply plugin: 'base'
 apply plugin: 'war'
 
 sourceCompatibility = 1.7
 targetCompatibility = 1.7
 
+configurations {
+    b2deploy
+}
 
 if (isBuildingBlock()) {
     version = getB2Version()
 }
 
 repositories {
-	mavenCentral()
-	maven {
-		url "https://bbprepo.blackboard.com/content/repositories/releases/"
-	}
+    mavenCentral()
+    maven {
+        url "https://bbprepo.blackboard.com/content/repositories/releases/"
+    }
 }
 
 dependencies {
-	compile files('lib/bb-stripes-utils-1.0.jar')
-	compile files('lib/json-taglib-0.4.1.jar')
+    b2deploy 'org.oscelot:b2deploy-task:0.1.0'
 
-  compile 'org.slf4j:slf4j-api:1.7.7'
-  compile 'org.slf4j:slf4j-simple:1.7.7'
+    compile files('lib/bb-stripes-utils-1.0.jar')
+    compile files('lib/json-taglib-0.4.1.jar')
 
-  compile 'org.apache.commons:commons-jexl:2.1.1'
-	compile 'net.sourceforge.stripes:stripes:1.5.7'
-	compile 'com.thoughtworks.xstream:xstream:1.4.4'
+    compile 'org.slf4j:slf4j-api:1.7.7'
+    compile 'org.slf4j:slf4j-simple:1.7.7'
 
-	providedCompile 'jstl:jstl:1.2'
-	providedCompile 'org.apache.velocity:velocity:1.5'
-	providedCompile 'commons-io:commons-io:1.4'
-	providedCompile 'javax.servlet:servlet-api:2.5'
+    compile 'org.apache.commons:commons-jexl:2.1.1'
+    compile 'net.sourceforge.stripes:stripes:1.5.7'
+    compile 'com.thoughtworks.xstream:xstream:1.4.4'
 
-	providedCompile 'blackboard.platform:bb-platform:9.1.100401.0'
-	providedCompile 'blackboard.platform:bb-taglibs:9.1.100401.0'
+    providedCompile 'jstl:jstl:1.2'
+    providedCompile 'org.apache.velocity:velocity:1.5'
+    providedCompile 'commons-io:commons-io:1.4'
+    providedCompile 'javax.servlet:servlet-api:2.5'
+
+    providedCompile 'blackboard.platform:bb-platform:9.1.100401.0'
+    providedCompile 'blackboard.platform:bb-taglibs:9.1.100401.0'
 }
 
+ant.taskdef(name: 'b2deploy', classname: 'org.oscelot.ant.B2DeployTask', classpath: configurations.b2deploy.asPath)
 
-//ant.taskdef(name: 'b2deploy', classname: 'org.oscelot.ant.B2DeployTask', classpath: configurations.b2deploy.asPath)
-//task deployb2(dependsOn: 'war') << {
-//    println "Deploying \"" + war.archivePath + "\""
-//    ant.b2deploy(localfilepath: war.archivePath,
-//        host: 'bbdev-vm-sp10',
-//        clean: 'true',
-//        courseorgavailable:'true')
-//}
+task deployb2(dependsOn: 'war') {
+    doLast {
+        println '"Deploying "' + war.archivePath + '"'
+        ant.b2deploy(localfilepath: war.archivePath,
+                host: 'http://localhost:29876',
+                clean: 'true',
+                courseorgavailable: 'true')
+    }
+}
 
 String getB2Version() {
-  File mfFile = new File(file(webAppDir), 'WEB-INF/bb-manifest.xml');
-  def manifest = new XmlSlurper().parse(mfFile);
-  return manifest.plugin.version['@value'];
+    File mfFile = new File(file(webAppDir), 'WEB-INF/bb-manifest.xml');
+    def manifest = new XmlSlurper().parse(mfFile);
+    return manifest.plugin.version['@value'];
 }
 
 boolean isBuildingBlock() {
-  File mfFile = new File(file(webAppDir), 'WEB-INF/bb-manifest.xml');
-  return mfFile.exists();
+    File mfFile = new File(file(webAppDir), 'WEB-INF/bb-manifest.xml');
+    return mfFile.exists();
 }
