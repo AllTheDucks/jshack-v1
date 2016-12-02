@@ -19,7 +19,7 @@
         </init-param>
         <init-param>
             <param-name>ActionBeanContext.Class</param-name>
-            <param-value>org.oscelot.bb.stripes.BlackboardActionBeanContext</param-value>
+            <param-value>com.alltheducks.bb.stripes.BlackboardActionBeanContext</param-value>
         </init-param>
         <init-param>
             <param-name>MultipartWrapper.Class</param-name>
@@ -27,7 +27,7 @@
         </init-param>
         <init-param>
             <param-name>Interceptor.Classes</param-name>
-            <param-value>org.oscelot.bb.stripes.interceptors.BlackboardSecurityInterceptor</param-value>
+            <param-value>com.alltheducks.bb.stripes.interceptors.BlackboardSecurityInterceptor</param-value>
         </init-param>
         <!--        <init-param>
         <param-name>LocalizationBundleFactory.Class</param-name>

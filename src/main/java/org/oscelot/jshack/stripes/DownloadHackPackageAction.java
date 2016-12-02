@@ -11,8 +11,8 @@ import net.sourceforge.stripes.action.DefaultHandler;
 import net.sourceforge.stripes.action.DontValidate;
 import net.sourceforge.stripes.action.Resolution;
 import net.sourceforge.stripes.validation.Validate;
-import org.oscelot.bb.stripes.BlackboardActionBeanContext;
-import org.oscelot.bb.stripes.EntitlementRestrictions;
+import com.alltheducks.bb.stripes.BlackboardActionBeanContext;
+import com.alltheducks.bb.stripes.EntitlementRestrictions;
 import org.oscelot.jshack.HackPackager;
 import org.oscelot.jshack.exceptions.PackageNotFoundException;
 

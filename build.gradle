@@ -22,7 +22,7 @@ repositories {
 dependencies {
     b2deploy 'org.oscelot:b2deploy-task:0.1.0'
 
-    compile files('lib/bb-stripes-utils-1.0.jar')
+    compile files('lib/bb-stripes-utils-1.1.1.jar')
     compile files('lib/json-taglib-0.4.1.jar')
 
     compile 'org.slf4j:slf4j-api:1.7.7'
