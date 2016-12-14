@@ -247,8 +247,15 @@
           return false;
         });
 
-        Event.observe($('bottom_submitHackButton'), 'click', submitHandler);
-        Event.observe($('top_submitHackButton'), 'click', submitHandler);
+        var bottomSubmitBtn = $('bottom_submitHackButton');
+        if(bottomSubmitBtn) {
+          Event.observe(bottomSubmitBtn, 'click', submitHandler);
+        }
+
+        var topSubmitBtn = $('top_submitHackButton');
+        if(topSubmitBtn) {
+          Event.observe(topSubmitBtn, 'click', submitHandler);
+        }
 
         var resContainer = $('jsh-resources');
         if (resources.length === 0) {
