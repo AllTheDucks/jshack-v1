@@ -31,7 +31,7 @@ dependencies {
         exclude module: 'log4j' // The log4j interface is implemented by org.slf4j:log4j-over-slf4j
     }
 
-    compile files('lib/bb-stripes-utils-1.1.1.jar')
+    compile files('lib/bb-stripes-utils-1.1.2.jar')
     compile files('lib/b2-logging-utils-1.0.0.jar')
     compile files('lib/json-taglib-0.4.1.jar')
 
