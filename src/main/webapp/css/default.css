@@ -35,3 +35,7 @@
 .disabledIcon {
   margin-right: 1em;
 }
+
+#editorContainer * {
+  font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', 'Consolas', 'source-code-pro', monospace;
+}
