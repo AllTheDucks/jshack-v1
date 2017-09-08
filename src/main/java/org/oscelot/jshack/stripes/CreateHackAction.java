@@ -38,7 +38,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  *
- * @author Wiley Fuller <wfuller@swin.edu.au>
+ * @author Wiley Fuller <wiley@alltheducks.com>
  */
 @EntitlementRestrictions(entitlements={"system.jshacks.CREATE"}, errorPage="/noaccess.jsp")
 public class CreateHackAction implements ActionBean {

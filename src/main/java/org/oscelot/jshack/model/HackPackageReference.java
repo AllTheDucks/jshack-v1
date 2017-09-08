@@ -10,7 +10,7 @@ import org.oscelot.jshack.model.restrictions.CompiledRestriction;
 
 /**
  *
- * @author Shane Argo <sargo@usc.edu.au>
+ * @author Shane Argo <shane@alltheducks.com>
  */
 public class HackPackageReference {
     

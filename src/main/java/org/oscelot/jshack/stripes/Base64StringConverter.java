@@ -18,7 +18,7 @@ import net.sourceforge.stripes.validation.ValidationError;
 
 /**
  *
- * @author Wiley Fuller <wfuller@swin.edu.au>
+ * @author Wiley Fuller <wiley@alltheducks.com>
  */
 public class Base64StringConverter implements TypeConverter<String> {
 

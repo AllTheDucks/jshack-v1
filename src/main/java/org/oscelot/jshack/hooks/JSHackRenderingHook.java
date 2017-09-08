@@ -27,7 +27,7 @@ import org.oscelot.jshack.model.HackPackage;
 /**
  * Base class for the JSHack rendering hook implementations.
  *
- * @author Wiley Fuller <wfuller@swin.edu.au>
+ * @author Wiley Fuller <wiley@alltheducks.com>
  */
 public abstract class JSHackRenderingHook implements RenderingHook {
 

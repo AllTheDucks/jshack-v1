@@ -53,7 +53,7 @@ task deployb2(dependsOn: 'war') {
     doLast {
         println '"Deploying "' + war.archivePath + '"'
         ant.b2deploy(localfilepath: war.archivePath,
-                host: 'http://localhost:29876',
+                host: 'http://localhost:19876',
                 clean: 'true',
                 courseorgavailable: 'true')
     }

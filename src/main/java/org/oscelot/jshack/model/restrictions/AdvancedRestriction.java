@@ -9,7 +9,7 @@ import org.apache.commons.jexl2.*;
 
 /**
  *
- * @author Shane Argo <sargo@usc.edu.au>
+ * @author Shane Argo <shane@alltheducks.com>
  */
 public class AdvancedRestriction extends CompiledRestriction {
 

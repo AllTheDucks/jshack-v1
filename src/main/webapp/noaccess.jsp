@@ -1,9 +1,7 @@
 <%-- 
     Document   : noaccess
     Created on : 21/07/2011, 11:36:53 AM
-    Author     : Wiley Fuller <wfuller@swin.edu.au>
-
-    Copyright Swinburne University of Technology, 2011.
+    Author     : Wiley Fuller <wiley@alltheducks.com>
   --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>

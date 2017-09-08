@@ -20,7 +20,7 @@ import org.oscelot.jshack.JSHackManagerFactory;
 
 /**
  *
- * @author Shane Argo <sargo@usc.edu.au>
+ * @author Shane Argo <shane@alltheducks.com>
  */
 @EntitlementRestrictions(entitlements={"system.jshacks.CREATE"}, errorPage="/noaccess.jsp")
 public class SetHackStatusAction implements ActionBean {

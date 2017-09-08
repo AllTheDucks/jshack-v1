@@ -29,10 +29,6 @@
             <param-name>Interceptor.Classes</param-name>
             <param-value>com.alltheducks.bb.stripes.interceptors.BlackboardSecurityInterceptor</param-value>
         </init-param>
-        <!--        <init-param>
-        <param-name>LocalizationBundleFactory.Class</param-name>
-        <param-value>au.edu.swinburne.bb.servlet.StudentViewLocalizationBundleFactory</param-value>
-    </init-param> -->
     </filter>
     <filter-mapping>
         <filter-name>StripesFilter</filter-name>

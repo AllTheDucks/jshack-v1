@@ -6,7 +6,7 @@ package org.oscelot.jshack.model;
 
 /**
  *
- * @author Wiley Fuller <wfuller@swin.edu.au>
+ * @author Wiley Fuller <wiley@alltheducks.com>
  */
 public class Restriction {
     private RestrictionType type;

@@ -8,7 +8,7 @@ import java.util.Comparator;
 
 /**
  *
- * @author Shane Argo <sargo@usc.edu.au>
+ * @author Shane Argo <shane@alltheducks.com>
  */
 public class CompiledRestrictionPriorityComparator implements Comparator<CompiledRestriction> {
 

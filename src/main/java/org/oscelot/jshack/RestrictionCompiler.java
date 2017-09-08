@@ -17,7 +17,7 @@ import org.oscelot.jshack.model.restrictions.*;
 
 /**
  *
- * @author Shane Argo <sargo@usc.edu.au>
+ * @author Shane Argo <shane@alltheducks.com>
  */
 public class RestrictionCompiler {
     

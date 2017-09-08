@@ -16,7 +16,7 @@ import org.oscelot.jshack.model.HackConfig;
 
 /**
  *
- * @author Wiley Fuller <wfuller@swin.edu.au>
+ * @author Wiley Fuller <wiley@alltheducks.com>
  */
 public class JSHackManagerFactory {
     

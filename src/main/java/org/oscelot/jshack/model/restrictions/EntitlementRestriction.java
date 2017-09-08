@@ -11,7 +11,7 @@ import blackboard.platform.security.SecurityUtil;
 
 /**
  *
- * @author Wiley Fuller <wfuller@swin.edu.au>
+ * @author Wiley Fuller <wiley@alltheducks.com>
  */
 public class EntitlementRestriction extends CompiledRestriction {
 

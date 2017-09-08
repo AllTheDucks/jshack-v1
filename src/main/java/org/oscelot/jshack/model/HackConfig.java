@@ -9,7 +9,7 @@ import java.util.List;
 
 /**
  *
- * @author Shane Argo <sargo@usc.edu.au>
+ * @author Shane Argo <shane@alltheducks.com>
  */
 public class HackConfig {
     

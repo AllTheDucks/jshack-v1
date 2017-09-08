@@ -13,7 +13,7 @@ import blackboard.platform.plugin.PlugInManagerFactory;
 
 /**
  *
- * @author Shane Argo <sargo@usc.edu.au>
+ * @author Shane Argo <shane@alltheducks.com>
  */
 public class BuildingBlockHelper {
     

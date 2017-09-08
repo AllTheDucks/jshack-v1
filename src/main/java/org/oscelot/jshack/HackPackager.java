@@ -24,7 +24,7 @@ import org.oscelot.jshack.model.HackPackage;
 
 /**
  *
- * @author Shane Argo <sargo@usc.edu.au>
+ * @author Shane Argo <shane@alltheducks.com>
  */
 public class HackPackager {
     

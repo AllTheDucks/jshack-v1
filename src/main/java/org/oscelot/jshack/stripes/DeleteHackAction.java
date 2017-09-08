@@ -22,7 +22,7 @@ import org.oscelot.jshack.model.HackPackage;
 
 /**
  *
- * @author Wiley Fuller <wfuller@swin.edu.au>
+ * @author Wiley Fuller <wiley@alltheducks.com>
  */
 @EntitlementRestrictions(entitlements={"system.jshacks.CREATE"}, errorPage="/noaccess.jsp")
 public class DeleteHackAction implements ActionBean {

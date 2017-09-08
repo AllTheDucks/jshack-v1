@@ -10,7 +10,7 @@ import blackboard.platform.context.Context;
 
 /**
  *
- * @author Shane Argo <sargo@usc.edu.au>
+ * @author Shane Argo <shane@alltheducks.com>
  */
 public class AdvancedCourseAvailabilityRestriction extends CourseAvailabilityRestriction {
     

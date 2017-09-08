@@ -18,7 +18,7 @@ import java.util.regex.Pattern;
 
 /**
  *
- * @author Shane Argo <sargo@usc.edu.au>
+ * @author Shane Argo <shane@alltheducks.com>
  */
 public class PortalRoleRestriction extends CompiledRestriction {
 

@@ -6,7 +6,7 @@ package org.oscelot.jshack.model;
 
 /**
  *
- * @author Wiley Fuller <wfuller@swin.edu.au>
+ * @author Wiley Fuller <wiley@alltheducks.com>
  */
 public enum RestrictionType {
     URL, ADVANCED, COURSE_ROLE, SYSTEM_ROLE, 
