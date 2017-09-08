@@ -22,6 +22,8 @@
 <fmt:message var="buttonCreateHackText" key="jsh.configPage.button.createHack" />
 <fmt:message var="buttonUploadHackPackageText" key="jsh.configPage.button.uploadHackPackage" />
 <fmt:message var="buttonForceReloadText" key="jsh.configPage.button.forceReload" />
+<fmt:message var="buttonSuspendInjectionText" key="jsh.configPage.button.suspendInjection" />
+<fmt:message var="buttonResumeInjectionText" key="jsh.configPage.button.resumeInjection" />
 <fmt:message var="menuEditText" key="jsh.configPage.menuItem.edit" />
 <fmt:message var="menuDeleteText" key="jsh.configPage.menuItem.delete" />
 <fmt:message var="menuDownloadText" key="jsh.configPage.menuItem.download" />
@@ -35,8 +37,8 @@
 <fmt:message var="labelMaxBbVersionText" key="jsh.configPage.label.maxBbVersion" />
 <fmt:message var="labelEnabledText" key="jsh.configPage.label.enabled" />
 <fmt:message var="labelHookTypeText" key="jsh.configPage.label.hook" />
-<fmt:message var="labelDeveloperNameText" key="jsh.configPage.label.developerName" />
 
+<jsp:useBean id="actionBean" class="org.oscelot.jshack.stripes.ConfigAction" scope="request" />
 
 <bbNG:genericPage title="${title}" ctxId="ctx" >
   <bbNG:cssFile href="css/default.css"/>
@@ -49,23 +51,30 @@
     <bbNG:pageTitleBar title="${title}" />
   </bbNG:pageHeader>
 
-
   <bbNG:hierarchyList reorderable="false" >
 
     <bbNG:actionControlBar showWhenEmpty="true">
-      <bbNG:actionButton title="${buttonCreateHackText}" url="CreateHack.action" primary="true"></bbNG:actionButton>
-      <bbNG:actionButton title="${buttonUploadHackPackageText}" url="UploadHackPackage.action" primary="true"></bbNG:actionButton>
-      <bbNG:actionButton title="${buttonForceReloadText}" url="ReloadHackPackages.action" primary="false"></bbNG:actionButton>
+      <bbNG:actionButton title="${buttonCreateHackText}" url="CreateHack.action" primary="true"/>
+      <bbNG:actionButton title="${buttonUploadHackPackageText}" url="UploadHackPackage.action" primary="true"/>
+      <bbNG:actionButton title="${buttonForceReloadText}" url="ReloadHackPackages.action" primary="false"/>
+      <c:choose>
+        <c:when test="${actionBean.hackConfig.injectionSuspended}">
+          <bbNG:actionButton title="${buttonResumeInjectionText}" url="SuspendInjection.action?resume" primary="false"/>
+        </c:when>
+        <c:otherwise>
+          <bbNG:actionButton title="${buttonSuspendInjectionText}" url="SuspendInjection.action?suspend" primary="false"/>
+        </c:otherwise>
+      </c:choose>
     </bbNG:actionControlBar>
     <c:forEach items="${actionBean.hackPackages}" var="hack">
       <bbNG:hierarchyListItem title="${hack.name}">
         <bbNG:delegateContextMenu>
-          <bbNG:contextMenuItem title="${menuEditText}" url="CreateHack.action?hackId=${hack.identifier}"></bbNG:contextMenuItem>
-          <bbNG:contextMenuItem title="${menuDeleteText}" url="DeleteHack.action?hackId=${hack.identifier}"></bbNG:contextMenuItem>
-          <bbNG:contextMenuItem title="${menuDownloadText}" url="DownloadHackPackage.action?hackId=${hack.identifier}"></bbNG:contextMenuItem>
+          <bbNG:contextMenuItem title="${menuEditText}" url="CreateHack.action?hackId=${hack.identifier}"/>
+          <bbNG:contextMenuItem title="${menuDeleteText}" url="DeleteHack.action?hackId=${hack.identifier}"/>
+          <bbNG:contextMenuItem title="${menuDownloadText}" url="DownloadHackPackage.action?hackId=${hack.identifier}"/>
           <c:choose>
-            <c:when test="${hack.enabled}"><bbNG:contextMenuItem title="${menuDisableText}" url="SetHackStatus.action?disableHack&hackId=${hack.identifier}"></bbNG:contextMenuItem></c:when>
-            <c:otherwise><bbNG:contextMenuItem title="${menuEnableText}" url="SetHackStatus.action?enableHack&hackId=${hack.identifier}"></bbNG:contextMenuItem></c:otherwise>
+            <c:when test="${hack.enabled}"><bbNG:contextMenuItem title="${menuDisableText}" url="SetHackStatus.action?disableHack&hackId=${hack.identifier}"/></c:when>
+            <c:otherwise><bbNG:contextMenuItem title="${menuEnableText}" url="SetHackStatus.action?enableHack&hackId=${hack.identifier}"/></c:otherwise>
         </c:choose>
         </bbNG:delegateContextMenu>
           <c:if test="${not empty hack.developerName}">

@@ -305,6 +305,16 @@ public class JSHackManager {
         this.persistHackConfig();
     }
 
+    public void suspendInjection() throws IOException {
+        getHackConfig().setInjectionSuspended(true);
+        this.persistHackConfig();
+    }
+
+    public void resumeInjection() throws IOException {
+        getHackConfig().setInjectionSuspended(false);
+        this.persistHackConfig();
+    }
+
     public File getArchiveDirectory() {
         return archiveDirectory;
     }

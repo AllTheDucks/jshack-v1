@@ -14,6 +14,7 @@ import java.util.List;
 public class HackConfig {
     
     private List<String> enabledPackages;
+    private boolean injectionSuspended;
 
     public List<String> getEnabledPackages() {
         return enabledPackages;
@@ -22,7 +23,15 @@ public class HackConfig {
     public void setEnabledPackages(List<String> availablePackages) {
         this.enabledPackages = availablePackages;
     }
-    
+
+    public boolean isInjectionSuspended() {
+        return injectionSuspended;
+    }
+
+    public void setInjectionSuspended(boolean injectionSuspended) {
+        this.injectionSuspended = injectionSuspended;
+    }
+
     public boolean isPackageEnabled(String identifier) {
         if(enabledPackages == null) {
             return false;

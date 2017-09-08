@@ -41,6 +41,11 @@ public abstract class JSHackRenderingHook implements RenderingHook {
         HackPackage currPkg = null;
         try {
             hackManager = getHackManager();
+
+            if(hackManager.getHackConfig().isInjectionSuspended()) {
+                return "<!-- JS Hack injection has been suspended -->";
+            }
+
             final StringBuilder output = new StringBuilder();
 
             final Context context = ContextManagerFactory.getInstance().getContext();
