@@ -12,19 +12,13 @@ import com.thoughtworks.xstream.mapper.ClassAliasingMapper;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.apache.commons.io.FileUtils;
-import org.oscelot.jshack.model.HackConfig;
-import org.oscelot.jshack.model.HackPackage;
-import org.oscelot.jshack.model.HackPackageReference;
-import org.oscelot.jshack.model.HackResource;
-import org.oscelot.jshack.model.Restriction;
+import org.oscelot.jshack.model.*;
 import org.oscelot.jshack.model.restrictions.CompiledRestriction;
+import org.oscelot.jshack.model.restrictions.URLRestriction;
 
 /**
  *
@@ -43,6 +37,16 @@ public class JSHackManager {
     private volatile List<HackPackage> hackPackages;
     private HashMap<String, List<HackPackageReference>> hackPackageReferences;
 
+    private final CompiledRestriction SKIP_CONFIG_PAGE_RESTRICTION;
+
+    public JSHackManager() {
+        final Restriction restriction = new Restriction();
+        restriction.setType(RestrictionType.URL);
+        restriction.setValue(".*/webapps/oslt-jshack-.*");
+        restriction.setInverse(true);
+        SKIP_CONFIG_PAGE_RESTRICTION = RestrictionCompiler.compileRestriction(restriction);
+    }
+
     public List<HackPackage> getMatchingHacks(String key, Context context) throws IOException {
         List<HackPackageReference> packageRefs = getHackPackageReferences(key);
 
@@ -54,9 +58,12 @@ public class JSHackManager {
 
         for (HackPackageReference p : packageRefs) {
 
+            final ArrayList<CompiledRestriction> restrictions = new ArrayList<>(p.getCompiledRestrictions());
+            restrictions.add(SKIP_CONFIG_PAGE_RESTRICTION);
+
             // Check all restrictions
             boolean passedRestrictions = true;
-            for (CompiledRestriction cr : p.getCompiledRestrictions()) {
+            for (CompiledRestriction cr : restrictions) {
                 passedRestrictions &= cr.test(context) ^ cr.isInverse();
                 if (!passedRestrictions) {
                     break;
