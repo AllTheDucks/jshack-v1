@@ -66,6 +66,7 @@
 <fmt:message var="restrictionPortalRoleText" key="jsh.restriction.portalRole" />
 <fmt:message var="restrictionCourseAvailabilityText" key="jsh.restriction.courseAvailability" />
 <fmt:message var="restrictionRequestParameterText" key="jsh.restriction.requestParameter" />
+<fmt:message var="restrictionNodeText" key="jsh.restriction.node" />
 
 
 <bbNG:genericPage title="${title}" ctxId="ctx" >
@@ -214,12 +215,15 @@
       </json:object>
     </json:array>
 
-      var restrictionTypes = [{'name': '${restrictionUrlText}', 'value': 'URL'},
+      var restrictionTypes = [
+	{'name': '${restrictionUrlText}', 'value': 'URL'},
         {'name': '${restrictionEntitlementText}', 'value': 'ENTITLEMENT'},
         {'name': '${restrictionAdvancedText}', 'value': 'ADVANCED'}, {'name': '${restrictionCourseRoleText}', 'value': 'COURSE_ROLE'},
         {'name': '${restrictionSystemRoleText}', 'value': 'SYSTEM_ROLE'}, {'name': '${restrictionPortalRoleText}', 'value': 'PORTAL_ROLE'},
         {'name': '${restrictionCourseAvailabilityText}', 'value': 'COURSE_AVAILABILITY'}, 
-        {'name': '${restrictionRequestParameterText}', 'value': 'REQUEST_PARAMETER'}];
+        {'name': '${restrictionRequestParameterText}', 'value': 'REQUEST_PARAMETER'},
+	{'name': '${restrictionNodeText}', 'value': 'NODE'},
+      ];
       var editor;
       var resTmpl;
       var restrTmpl;
