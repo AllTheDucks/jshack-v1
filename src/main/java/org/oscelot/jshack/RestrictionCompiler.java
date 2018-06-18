@@ -75,6 +75,11 @@ public class RestrictionCompiler {
                     }
                     cr = rpr;
                     break;
+		
+		case NODE:
+		    cr = new NodeRestriction();
+		    ((NodeRestriction)cr).setNodeName(r.getValue());
+		    break;
 
                 default:
                     return null;
