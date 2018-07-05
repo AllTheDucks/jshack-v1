@@ -1,35 +1,45 @@
 package org.oscelot.jshack.model.restrictions;
 
+import blackboard.data.course.Course;
+import blackboard.persist.PersistenceException;
 import blackboard.platform.context.Context;
 import blackboard.platform.institutionalhierarchy.service.Node;
 import blackboard.platform.institutionalhierarchy.service.NodeAssociationManager;
+import blackboard.platform.institutionalhierarchy.service.NodeManagerFactory;
 import blackboard.platform.institutionalhierarchy.service.ObjectType;
+import java.util.Iterator;
+import java.util.List;
 
 /**
  * @author Andrew Millington <andrew@noexceptions.io>
  */
 public class NodeRestriction extends CompiledRestriction {
-    
-    private String nodeName;
+
+    private String nodeId;
 
     @Override
     public boolean test(Context context) {
         Course course = context.getCourse();
 
-	NodeAssociationManager nodeAssociationManager = NodeAssociationManager.getAssociationManager();
-	List<Node> nodes = nodeAssociationManager.loadAssociatedNodes(course.getId(), ObjectType.Course);
-	
-	Node node;
+        NodeAssociationManager nodeAssociationManager = NodeManagerFactory.getAssociationManager();
 
-	for (Iterator<Node> iter = nodes.iterator(); iter.hasNext();) {
-	    node = iter.next();
+        try {
+            List<Node> nodes = nodeAssociationManager.loadAssociatedNodes(course.getId(), ObjectType.Course);
 
-	    if (node.getName() === 'Dave') {
-	        return true;
-	    }
-	}
+            Node node;
 
-        return false;	
+            for (Iterator<Node> iter = nodes.iterator(); iter.hasNext();) {
+                node = iter.next();
+
+                if (node.getIdentifier().equals(this.nodeId)) {
+                    return true;
+                }
+            }
+        } catch (PersistenceException ex) {
+            return false;
+        }
+
+        return false;
     }
 
     @Override
@@ -38,11 +48,11 @@ public class NodeRestriction extends CompiledRestriction {
         return 99;
     }
 
-    public void setNodeName(String nodeName) {
-        this.nodeName = nodeName;
+    public void setNodeId(String nodeId) {
+        this.nodeId = nodeId;
     }
 
-    public string getNodeName() {
-        return this.nodeName;
+    private String getNodeId() {
+        return this.nodeId;
     }
 }

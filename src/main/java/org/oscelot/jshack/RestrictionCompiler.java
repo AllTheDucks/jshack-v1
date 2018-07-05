@@ -20,19 +20,19 @@ import org.oscelot.jshack.model.restrictions.*;
  * @author Shane Argo <shane@alltheducks.com>
  */
 public class RestrictionCompiler {
-    
+
     private static Boolean courseIsAvailableByDurationFound = null;
-    
+
     public static CompiledRestriction compileRestriction(Restriction r) {
         CompiledRestriction cr;
-        
+
         try {
             switch(r.getType()) {
                 case URL:
                     cr = new URLRestriction();
                     ((URLRestriction)cr).setURLPatternString(r.getValue());
                     break;
-                case ENTITLEMENT: 
+                case ENTITLEMENT:
                     cr = new EntitlementRestriction();
                     ((EntitlementRestriction)cr).setEntitlementUID(r.getValue());
                     break;
@@ -40,32 +40,32 @@ public class RestrictionCompiler {
                     cr = new AdvancedRestriction();
                     ((AdvancedRestriction)cr).setExpression(r.getValue());
                     break;
-                    
+
                 case COURSE_AVAILABILITY:
                     if(isCourseIsAvailableByDurationFound()) {
                         cr = new AdvancedCourseAvailabilityRestriction();
                     } else {
                         cr = new CourseAvailabilityRestriction();
                     }
-                    
+
                     ((CourseAvailabilityRestriction)cr).setRequireAvilable(Boolean.parseBoolean(r.getValue()));
                     break;
-                    
+
                 case SYSTEM_ROLE:
                     cr = new SystemRoleRestriction();
                     ((SystemRoleRestriction)cr).setRolesByPatternString(r.getValue());
                     break;
-                    
+
                 case PORTAL_ROLE:
                     cr = new PortalRoleRestriction();
                     ((PortalRoleRestriction)cr).setRolesByPatternString(r.getValue());
                     break;
-                    
+
                 case COURSE_ROLE:
                     cr = new CourseRoleRestriction();
                     ((CourseRoleRestriction)cr).setRolesByPatternString(r.getValue());
                     break;
-                    
+
                 case REQUEST_PARAMETER:
                     RequestParameterRestriction rpr = new RequestParameterRestriction();
                     String[] valueArray = r.getValue().split("=", 2);
@@ -75,25 +75,25 @@ public class RestrictionCompiler {
                     }
                     cr = rpr;
                     break;
-		
+
 		case NODE:
 		    cr = new NodeRestriction();
-		    ((NodeRestriction)cr).setNodeName(r.getValue());
+		    ((NodeRestriction)cr).setNodeId(r.getValue());
 		    break;
 
                 default:
                     return null;
-            } 
+            }
         }
         catch (Exception e)
         {
             return null;
         }
-        
+
         cr.setInverse(r.isInverse());
         return cr;
     }
-        
+
     public static List<CompiledRestriction> compileRestrictions(List<Restriction> rs) {
         List<CompiledRestriction> result = new ArrayList<CompiledRestriction>(rs.size());
         for(Restriction r : rs) {
@@ -102,11 +102,11 @@ public class RestrictionCompiler {
                 result.add(compileRestriction(r));
             }
         }
-        
+
         Collections.sort(result, new CompiledRestrictionPriorityComparator());
         return result;
     }
-    
+
     private static boolean isCourseIsAvailableByDurationFound() {
         if(courseIsAvailableByDurationFound == null) {
             Method m = null;
@@ -124,6 +124,6 @@ public class RestrictionCompiler {
         }
         return courseIsAvailableByDurationFound.booleanValue();
     }
-    
-    
+
+
 }
