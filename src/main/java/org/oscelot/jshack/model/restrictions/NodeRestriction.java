@@ -21,6 +21,10 @@ public class NodeRestriction extends CompiledRestriction {
     public boolean test(Context context) {
         Course course = context.getCourse();
 
+        if (course == null) {
+            return false;
+        }
+
         NodeAssociationManager nodeAssociationManager = NodeManagerFactory.getAssociationManager();
 
         try {
