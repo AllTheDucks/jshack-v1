@@ -48,8 +48,7 @@ public class NodeRestriction extends CompiledRestriction {
 
     @Override
     public int getPriority() {
-	// TODO: Need to update this number to something more sensible
-        return 99;
+        return 7;
     }
 
     public void setNodeId(String nodeId) {
