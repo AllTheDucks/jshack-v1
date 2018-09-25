@@ -10,7 +10,7 @@ import blackboard.platform.plugin.PlugInUtil;
 import blackboard.servlet.renderinghook.RenderingHook;
 import java.io.IOException;
 import java.io.StringWriter;
-import java.util.Collection;
+import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -53,7 +53,7 @@ public abstract class JSHackRenderingHook implements RenderingHook {
                 return "";
             }
 
-            final Collection<HackPackage> packages = hackManager.getMatchingHacks(this.getKey(), context);
+            final List<HackPackage> packages = hackManager.getMatchingHacks(this.getKey(), context);
 
             if (packages != null) {
                 for (HackPackage hackPackage : packages) {

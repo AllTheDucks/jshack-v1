@@ -39,6 +39,9 @@ public class JSHackManager {
 
     private final CompiledRestriction SKIP_CONFIG_PAGE_RESTRICTION;
 
+    private Comparator<HackPackage> nameComparator = Comparator.comparing(HackPackage::getName);
+    private Comparator<HackPackage> priorityComparator = Comparator.comparing(HackPackage::getPriority).reversed();
+
     public JSHackManager() {
         final Restriction restriction = new Restriction();
         restriction.setType(RestrictionType.URL);
@@ -74,6 +77,8 @@ public class JSHackManager {
                 matchingPackages.add(p.getHackPackage());
             }
         }
+
+        matchingPackages.sort(priorityComparator);
 
         return matchingPackages;
     }
@@ -123,6 +128,9 @@ public class JSHackManager {
                 }
             }
         }
+
+        reloadedPackages.sort(nameComparator);
+
         hackPackages = reloadedPackages;
         lastPackageReload = new Date();
         return reloadedPackages;

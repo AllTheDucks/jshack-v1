@@ -30,6 +30,7 @@ public class HackPackage {
     private boolean enabled;
     private String source;
     private Date lastUpdated;
+    private int priority;
     
     public HackPackage() {
     }
@@ -197,4 +198,11 @@ public class HackPackage {
         this.version = version;
     }
 
+    public int getPriority() {
+        return priority;
+    }
+
+    public void setPriority(int priority) {
+        this.priority = priority;
+    }
 }
