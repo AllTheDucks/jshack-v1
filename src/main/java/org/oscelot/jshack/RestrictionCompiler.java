@@ -76,10 +76,10 @@ public class RestrictionCompiler {
                     cr = rpr;
                     break;
 
-		case NODE:
-		    cr = new NodeRestriction();
-		    ((NodeRestriction)cr).setNodeId(r.getValue());
-		    break;
+                case NODE:
+                    cr = new NodeRestriction();
+                    ((NodeRestriction)cr).setNodeId(r.getValue());
+                    break;
 
                 default:
                     return null;
@@ -124,6 +124,4 @@ public class RestrictionCompiler {
         }
         return courseIsAvailableByDurationFound.booleanValue();
     }
-
-
 }
