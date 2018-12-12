@@ -220,13 +220,13 @@
     </json:array>
 
       var restrictionTypes = [
-	{'name': '${restrictionUrlText}', 'value': 'URL'},
+	    {'name': '${restrictionUrlText}', 'value': 'URL'},
         {'name': '${restrictionEntitlementText}', 'value': 'ENTITLEMENT'},
         {'name': '${restrictionAdvancedText}', 'value': 'ADVANCED'}, {'name': '${restrictionCourseRoleText}', 'value': 'COURSE_ROLE'},
         {'name': '${restrictionSystemRoleText}', 'value': 'SYSTEM_ROLE'}, {'name': '${restrictionPortalRoleText}', 'value': 'PORTAL_ROLE'},
         {'name': '${restrictionCourseAvailabilityText}', 'value': 'COURSE_AVAILABILITY'}, 
         {'name': '${restrictionRequestParameterText}', 'value': 'REQUEST_PARAMETER'},
-	{'name': '${restrictionNodeText}', 'value': 'NODE'},
+	    {'name': '${restrictionNodeText}', 'value': 'NODE'},
       ];
       var editor;
       var resTmpl;
