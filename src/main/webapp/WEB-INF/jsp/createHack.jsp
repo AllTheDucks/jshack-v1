@@ -35,6 +35,7 @@
 <fmt:message var="stepInjectedContentText" key="jsh.createHackPage.step.injectedContent" />
 <fmt:message var="labelSnippetText" key="jsh.createHackPage.label.snippet" />
 <fmt:message var="labelInjectionPointText" key="jsh.createHackPage.label.injectionPoint" />
+<fmt:message var="labelInjectionPriorityText" key="jsh.createHackPage.label.injectionPriority" />
 <fmt:message var="labelResourcesText" key="jsh.createHackPage.label.resources" />
 <fmt:message var="labelFileText" key="jsh.createHackPage.label.file" />
 <fmt:message var="labelMimeTypeText" key="jsh.createHackPage.label.mimeType" />
@@ -140,7 +141,10 @@
             <stripes:option value="tags.globalNavPage.start">${injectionPointGlobalNavPageText}</stripes:option>
             <stripes:option value="tag.course.breadcrumb.control">${injectionPointCourseBreadcrumbText}</stripes:option>
           </stripes:select>
-        </bbNG:dataElement>      
+        </bbNG:dataElement>
+        <bbNG:dataElement label="${labelInjectionPriorityText}">
+          <stripes:text name="hack.priority" />
+        </bbNG:dataElement>
         <bbNG:dataElement label="${labelResourcesText}" >
           <div id="jsh-resources"></div>
           <button id="jsh_addResourceButton">${buttonAddResourceText}</button>
