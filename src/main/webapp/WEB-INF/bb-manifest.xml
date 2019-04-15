@@ -2,14 +2,16 @@
 <!--
     Author     : Wiley Fuller <wiley@alltheducks.com>
 -->
-<manifest>
+<manifest xmlns="http://www.blackboard.com/bb-manifest-plugin"
+          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xsi:schemaLocation="http://www.blackboard.com/bb-manifest-plugin https://bbprepo.blackboard.com/content/repositories/releases/blackboard/platform/bb-manifest-plugin/9.1.201410.160373/bb-manifest-plugin-9.1.201410.160373.xsd">
   <plugin>
     <name value="jsh.plugin.name"/>
     <handle value="jshack"/>
     <description value="jsh.plugin.description"/>
     <default-locale value="en_GB" />
     <webapp-type value="javaext" />
-    <version value="1.0.12"/>
+    <version value="1.0.13"/>
     <requires>
       <bbversion value="9.1"/>
     </requires>
@@ -58,15 +60,11 @@
         <description>jsh.plugin.manage.description</description>
         <links>
           <link>
-            <type value="nav_handle_param" />
-            <navhandle value="pa_ext"/>
+            <type value="system_tool" />
             <name value="jsh.plugin.manage.label" />
             <url value="Config.action" />
             <entitlement-uid value="system.jshacks.CREATE" />
             <description value="jsh.plugin.manage.description" />
-            <icons>
-              <listitem value="" />
-            </icons>
           </link>
         </links>
       </application>
