@@ -27,7 +27,7 @@ import org.oscelot.jshack.exceptions.PackageManagementException;
  *
  * @author Shane Argo <shane@alltheducks.com>
  */
-@EntitlementRestrictions(entitlements={"system.jshacks.CREATE"}, errorPage="/noaccess.jsp")
+@EntitlementRestrictions(entitlements={"system.jshacks.MODIFY"}, errorPage="/noaccess.jsp")
 public class UploadHackPackageAction implements ActionBean {
 
     BlackboardActionBeanContext context;

@@ -11,7 +11,7 @@
     <description value="jsh.plugin.description"/>
     <default-locale value="en_GB" />
     <webapp-type value="javaext" />
-    <version value="1.0.13"/>
+    <version value="1.0.15"/>
     <requires>
       <bbversion value="9.1"/>
     </requires>
@@ -56,14 +56,14 @@
     </extension-defs>
 
     <application-defs>
-      <application handle="oslt-jsh-manage-hacks" type="system" name="jsh.plugin.manage.title">
+      <application handle="oslt-jsh-manage-hacks-tool" type="system" name="jsh.plugin.manage.title">
         <description>jsh.plugin.manage.description</description>
         <links>
           <link>
             <type value="system_tool" />
             <name value="jsh.plugin.manage.label" />
             <url value="Config.action" />
-            <entitlement-uid value="system.jshacks.CREATE" />
+            <entitlement-uid value="system.jshacks.MODIFY" />
             <description value="jsh.plugin.manage.description" />
           </link>
         </links>
@@ -71,10 +71,11 @@
     </application-defs>
 
     <entitlements>
-      <entitlement uid="system.jshacks.CREATE"
+      <!-- Label is remaining as CREATE.label for backwards compatibility -->
+      <entitlement uid="system.jshacks.MODIFY"
                    label="jsh.entitlement.CREATE.label"
                    type="Course"
-                   template="system.plugin.CREATE" />
+                   template="system.plugin.MODIFY" />
     </entitlements>
 
 

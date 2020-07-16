@@ -40,7 +40,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Wiley Fuller <wiley@alltheducks.com>
  */
-@EntitlementRestrictions(entitlements={"system.jshacks.CREATE"}, errorPage="/noaccess.jsp")
+@EntitlementRestrictions(entitlements={"system.jshacks.MODIFY"}, errorPage="/noaccess.jsp")
 public class CreateHackAction implements ActionBean {
 
     private static final Logger logger = LoggerFactory.getLogger(CreateHackAction.class);

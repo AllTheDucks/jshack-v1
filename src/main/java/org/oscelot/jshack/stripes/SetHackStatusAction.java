@@ -22,7 +22,7 @@ import org.oscelot.jshack.JSHackManagerFactory;
  *
  * @author Shane Argo <shane@alltheducks.com>
  */
-@EntitlementRestrictions(entitlements={"system.jshacks.CREATE"}, errorPage="/noaccess.jsp")
+@EntitlementRestrictions(entitlements={"system.jshacks.MODIFY"}, errorPage="/noaccess.jsp")
 public class SetHackStatusAction implements ActionBean {
 
     @Validate(required=true)

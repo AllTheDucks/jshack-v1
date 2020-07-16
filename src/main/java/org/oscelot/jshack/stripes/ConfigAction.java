@@ -25,7 +25,7 @@ import org.oscelot.jshack.model.HackPackage;
  *
  * @author Wiley Fuller <wiley@alltheducks.com>
  */
-@EntitlementRestrictions(entitlements={"system.jshacks.CREATE"}, errorPage="/noaccess.jsp")
+@EntitlementRestrictions(entitlements={"system.jshacks.MODIFY"}, errorPage="/noaccess.jsp")
 public class ConfigAction implements ActionBean {
 
     BlackboardActionBeanContext context;

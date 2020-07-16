@@ -44,7 +44,6 @@
   
   <bbNG:pageHeader instructions="${pageHelp}">
     <bbNG:breadcrumbBar environment="SYS_ADMIN" >
-      <bbNG:breadcrumb href="../blackboard/admin/manage_plugins.jsp" title="${pluginPageStr}" />
       <bbNG:breadcrumb title="${title}"/>
     </bbNG:breadcrumbBar>
     <bbNG:pageTitleBar title="${title}" />
