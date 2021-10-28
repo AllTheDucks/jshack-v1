@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package org.oscelot.jshack.model.restrictions;
 
 import blackboard.data.role.PortalRole;
@@ -25,17 +21,22 @@ public class PortalRoleRestriction extends CompiledRestriction {
     private List<PortalRole> roles;
     
     @Override
-    public boolean test(Context context) {
-        Id userId = context.getUserId();
-        List<PortalRole> actualRoles;
+    public boolean test(final Context context) {
+        final Id userId = context.getUserId();
+
+        if(userId == null) {
+            return false;
+        }
+
+        final List<PortalRole> actualRoles;
         try {
             actualRoles = PortalRoleDbLoader.Default.getInstance().loadAllByUserId(userId);
         } catch (PersistenceException ex) {
             Logger.getLogger(PortalRoleRestriction.class.getName()).log(Level.SEVERE, null, ex);
             return false;
         }
-        for(PortalRole requiredRole : roles) {
-            for(PortalRole actualRole : actualRoles) {
+        for(final PortalRole requiredRole : roles) {
+            for(final PortalRole actualRole : actualRoles) {
                 if(actualRole.getId().equals(requiredRole.getId())) {
                     return true;
                 }
@@ -58,10 +59,10 @@ public class PortalRoleRestriction extends CompiledRestriction {
     }
     
     public void setRolesByPattern(Pattern pattern) throws PersistenceException {
-        PortalRoleDbLoader loader = PortalRoleDbLoader.Default.getInstance();
-        roles = new ArrayList<PortalRole>();
-        for(PortalRole pr : loader.loadAll()) {
-            Matcher m = pattern.matcher(pr.getRoleID());
+        final PortalRoleDbLoader loader = PortalRoleDbLoader.Default.getInstance();
+        roles = new ArrayList<>();
+        for(final PortalRole pr : loader.loadAll()) {
+            final Matcher m = pattern.matcher(pr.getRoleID());
             if(m.matches()) {
                 roles.add(pr);
             }
