@@ -39,7 +39,7 @@ public class ConfigAction implements ActionBean {
         hackConfig = manager.getHackConfig();
 
         if(hackConfig.isInjectionSuspended()) {
-            InlineReceiptUtil.addWarningReceiptToRequest(context.getRequest(), BuildingBlockHelper.getLocalisationString("jsh.receipt.injectionSuspended"));
+            InlineReceiptUtil.addWarningReceiptToRequest(BuildingBlockHelper.getLocalisationString("jsh.receipt.injectionSuspended"));
         }
 
         return new ForwardResolution("/WEB-INF/jsp/config.jsp");

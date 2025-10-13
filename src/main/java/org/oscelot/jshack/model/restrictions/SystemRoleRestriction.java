@@ -33,7 +33,8 @@ public class SystemRoleRestriction extends CompiledRestriction {
         }
         List<SystemRole> actualRoles;
         try {
-            actualRoles = DomainManagerFactory.getInstance().getDefaultDomainRolesForUser(u.getUserName());
+
+            actualRoles = DomainManagerFactory.getInstance().getDefaultDomainRolesForUser(u.getId());
         } catch (PersistenceException ex) {
             Logger.getLogger(SystemRoleRestriction.class.getName()).log(Level.SEVERE, null, ex);
             return false;

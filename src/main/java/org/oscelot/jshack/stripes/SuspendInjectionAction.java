@@ -38,8 +38,8 @@ public class SuspendInjectionAction implements ActionBean {
 
         manager.resumeInjection();
 
-        final String url = InlineReceiptUtil.addSuccessReceiptToUrl("Config.action", BuildingBlockHelper.getLocalisationString("jsh.receipt.injectionResumed"));
-        return new RedirectResolution(url, false);
+        InlineReceiptUtil.addSuccessReceiptToRequest(BuildingBlockHelper.getLocalisationString("jsh.receipt.injectionResumed"));
+        return new RedirectResolution("Config.action", false);
     }
     
     public void setContext(ActionBeanContext context) {
