@@ -11,9 +11,8 @@
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
-<%@taglib uri="http://stripes.sourceforge.net/stripes.tld" prefix="stripes" %>  
-<%@ taglib prefix="json" uri="http://www.atg.com/taglibs/json" %>
-
+<%@taglib uri="http://stripes.sourceforge.net/stripes.tld" prefix="stripes" %>
+<%@taglib uri="http://alltheducks.com/json-functions" prefix="json" %>
 
 
 <fmt:message var="pluginPageStr" key="admin_plugin_manage.label" bundle="${bundles.navigation_item}"/>
@@ -198,33 +197,16 @@
 
 
   <script>
-    var resources = <json:array name="resources" var="currRes" items="${actionBean.hack.resources}">
-      <json:object>
-        <json:property name="path" value="${currRes.path}" escapeXml="false"/>
-        <json:property name="mime" value="${currRes.mime}"/>
-        <json:property name="embed" value="${currRes.embed}"/>
-      </json:object>
-    </json:array>
-      var tempFiles = <json:array name="tempFiles" var="currFile" items="${actionBean.tempFiles}">
-      <json:object>
-        <json:property name="fileName" value="${currFile}"/>
-      </json:object>
-    </json:array>
-
-      var restrictions = <json:array name="restrictions" var="currRestr" items="${actionBean.hack.restrictions}">
-      <json:object>
-        <json:property name="type" value="${currRestr.type}"/>
-        <json:property name="value" value="${currRestr.value}" escapeXml="false"/>
-        <json:property name="inverse" value="${currRestr.inverse}"/>
-      </json:object>
-    </json:array>
+      var resources = ${json:toJson(actionBean.hack.resources)};
+      var tempFiles = ${json:toJson(actionBean.tempFiles)};
+      var restrictions = ${json:toJson(actionBean.hack.restrictions)};
 
       var restrictionTypes = [
 	    {'name': '${restrictionUrlText}', 'value': 'URL'},
         {'name': '${restrictionEntitlementText}', 'value': 'ENTITLEMENT'},
         {'name': '${restrictionAdvancedText}', 'value': 'ADVANCED'}, {'name': '${restrictionCourseRoleText}', 'value': 'COURSE_ROLE'},
         {'name': '${restrictionSystemRoleText}', 'value': 'SYSTEM_ROLE'}, {'name': '${restrictionPortalRoleText}', 'value': 'PORTAL_ROLE'},
-        {'name': '${restrictionCourseAvailabilityText}', 'value': 'COURSE_AVAILABILITY'}, 
+        {'name': '${restrictionCourseAvailabilityText}', 'value': 'COURSE_AVAILABILITY'},
         {'name': '${restrictionRequestParameterText}', 'value': 'REQUEST_PARAMETER'},
 	    {'name': '${restrictionNodeText}', 'value': 'NODE'},
       ];
@@ -271,7 +253,7 @@
             if (resources[i].path && resources[i].path.trim() === '') {
               resources[i].path = null;
             }
-            if (tempFiles[i]) {
+            if (tempFiles != null && tempFiles[i]) {
               resources[i].tempFile = tempFiles[i].fileName;
             }
             resContainer.insert({'bottom': createResourceDiv(resources[i])});

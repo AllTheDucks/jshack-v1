@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<taglib xmlns="http://java.sun.com/xml/ns/javaee" version="2.1">
+    <tlib-version>1.0</tlib-version>
+    <short-name>json</short-name>
+    <uri>http://alltheducks.com/json-functions</uri>
+
+    <function>
+        <name>toJson</name>
+        <function-class>org.oscelot.jshack.jsp.JsonFunctions</function-class>
+        <function-signature>java.lang.String toJson(java.lang.Object)</function-signature>
+    </function>
+</taglib>

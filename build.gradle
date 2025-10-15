@@ -1,8 +1,20 @@
+import groovy.xml.*
+
 plugins {
+    id 'java'
     id 'war'
 }
 
 version = "1.0.16"
+
+configurations {
+    jspc
+    compileOnlyResolvable {
+        canBeResolved = true
+        canBeConsumed = false
+        extendsFrom compileOnly
+    }
+}
 
 repositories {
     mavenCentral()
@@ -10,7 +22,6 @@ repositories {
         url = "https://bbprepo.blackboard.com/repository/releases/"
     }
 }
-
 
 
 java {
@@ -30,22 +41,157 @@ dependencies {
     implementation 'ch.qos.logback:logback-classic:1.5.19'
     implementation 'org.slf4j:log4j-over-slf4j:2.0.17'
 
-    implementation ('net.sourceforge.stripes:stripes:1.6.0') {
+    implementation('net.sourceforge.stripes:stripes:1.6.0') {
         exclude module: 'log4j' // The log4j interface is implemented by org.slf4j:log4j-over-slf4j
     }
 
     implementation files('lib/bb-stripes-utils-1.1.2.jar')
     implementation files('lib/b2-logging-utils-1.0.0.jar')
-    implementation files('lib/json-taglib-0.4.1.jar')
 
     implementation 'org.apache.commons:commons-jexl:2.1.1'
     implementation 'com.thoughtworks.xstream:xstream:1.4.21'
+    implementation 'com.google.code.gson:gson:2.13.2'
 
     compileOnly 'jstl:jstl:1.2'
     compileOnly 'org.apache.velocity:velocity:1.5'
     compileOnly 'commons-io:commons-io:1.4'
-    compileOnly 'javax.servlet:servlet-api:2.5'
+    compileOnly "javax.servlet:javax.servlet-api:4.0.1"
 
     compileOnly 'blackboard.platform:bb-platform:3902.1.0'
     compileOnly 'blackboard.platform:bb-taglibs:3902.1.0'
+
+    jspc "org.apache.tomcat:tomcat-jasper:9.0.108"
+    jspc "org.apache.tomcat:tomcat-jasper-el:9.0.108"
+    jspc "org.eclipse.jdt:ecj:3.43.0"
+    jspc "org.apache.taglibs:taglibs-standard-impl:1.2.5"
+    jspc "javax.servlet.jsp:javax.servlet.jsp-api:2.3.3"
+    jspc "org.apache.ant:ant:1.10.14"
+    jspc "org.apache.ant:ant-launcher:1.10.14"
+    jspc 'org.slf4j:slf4j-simple:2.0.17'
+}
+
+def webAppDir = file('src/main/webapp')
+def jspSrcDir = file('src/main/webapp/WEB-INF/jsp')
+def jspGenDir = layout.buildDirectory.dir('generated-jsp')
+
+def mainWebXml = file('src/main/webapp/WEB-INF/web.xml')
+def webXmlFragment= layout.buildDirectory.file("web-fragment.xml")
+def mergedWebXml = layout.buildDirectory.file("merged-web.xml")
+
+tasks.register('jspcGenerate', JavaExec) {
+    group = 'build'
+    description = 'Compile JSPs at build time via Jasper JSPC'
+    inputs.dir(webAppDir)
+    inputs.dir(jspSrcDir)
+    outputs.dir(jspGenDir)
+    outputs.file(webXmlFragment)
+
+    classpath = files(
+            configurations.jspc,
+            sourceSets.main.output,
+            sourceSets.main.compileClasspath,
+            configurations.compileOnlyResolvable
+    ).filter { f ->
+        def n = f.name
+        !n.startsWith('logback-') && !n.contains('logback-classic') && !n.contains('logback-core')
+    }
+
+    mainClass.set('org.apache.jasper.JspC')
+
+    args = [
+            '-uriroot', webAppDir.absolutePath,
+            '-webapp',  webAppDir.absolutePath,
+            '-p',       'org.oscelot.jshack.jsp',
+            '-d',       jspGenDir.get().asFile.absolutePath,
+            '-webxml', webXmlFragment.get().asFile.absolutePath,
+            '-compile',
+    ]
+}
+
+tasks.named('war') {
+    dependsOn tasks.named('jspcGenerate')
+    dependsOn tasks.named('mergeWebXml')
+
+    from(jspGenDir) {
+        into 'WEB-INF/classes'
+    }
+    webXml = mergedWebXml.get().asFile
+
+    exclude('WEB-INF/web.xml')
+}
+
+tasks.register('mergeWebXml') {
+    group = 'build'
+    description = 'Merge JSPC-generated servlet entries into web.xml'
+    dependsOn tasks.named('jspcGenerate')
+
+    inputs.files(mainWebXml, webXmlFragment)
+    outputs.file(mergedWebXml)
+
+    doLast {
+        def webXmlFragmentFile = webXmlFragment.get().asFile;
+        def mergedWebXmlFile = mergedWebXml.get().asFile;
+
+        if (!mainWebXml.exists()) {
+            throw new GradleException("Main web.xml not found at $mainWebXml")
+        }
+        if (!webXmlFragmentFile.exists()) {
+            logger.lifecycle("No JSPC fragment found at $webXmlFragmentFile — copying main web.xml unchanged.")
+            mergedWebXmlFile.parentFile.mkdirs()
+            mergedWebXmlFile.text = mainWebXml.getText('UTF-8')
+            return
+        }
+
+        // Secure XML parser (no external entities)
+        def parser = new XmlParser(false, false)
+        parser.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true)
+        parser.setFeature("http://xml.org/sax/features/external-general-entities", false)
+        parser.setFeature("http://xml.org/sax/features/external-parameter-entities", false)
+
+        Node mainRoot = parser.parse(mainWebXml)
+        Node fragRoot = parser.parse(webXmlFragmentFile)
+
+        // Collect existing servlet names and mappings
+        Set<String> existingServletNames = (mainRoot.'servlet'*. 'servlet-name'*.text()).flatten() as Set
+
+        Map<String, Set<String>> existingMappings = [:].withDefault { new LinkedHashSet<String>() }
+        mainRoot.'servlet-mapping'.each { Node m ->
+            def name = m.'servlet-name'.text()
+            m.'url-pattern'.each { Node p -> existingMappings[name] << p.text() }
+        }
+
+        // --- Merge <servlet> entries (skip by servlet-name) ---
+        fragRoot.'servlet'.each { Node s ->
+            def name = s.'servlet-name'.text()
+            if (!existingServletNames.contains(name)) {
+                mainRoot.append(s.clone())
+                existingServletNames << name
+            }
+        }
+
+        // --- Merge <servlet-mapping> entries (de-dupe per pattern) ---
+        fragRoot.'servlet-mapping'.each { Node m ->
+            def name = m.'servlet-name'.text()
+            def patterns = m.'url-pattern'*.text()
+
+            // Find which patterns are new for that servlet-name
+            def missing = patterns.findAll { !(it in existingMappings[name]) }
+            if (!missing.isEmpty()) {
+                def newMap = new Node(null, 'servlet-mapping')
+                new Node(newMap, 'servlet-name', name)
+                missing.each { p -> new Node(newMap, 'url-pattern', p) }
+                mainRoot.append(newMap)
+                existingMappings[name].addAll(missing)
+            }
+        }
+
+        // Write pretty output
+        mergedWebXmlFile.parentFile.mkdirs()
+        def writer = new StringWriter()
+        def printer = new XmlNodePrinter(new PrintWriter(writer))
+        printer.preserveWhitespace = true
+        printer.print(mainRoot)
+        mergedWebXmlFile.text = writer.toString()
+        logger.lifecycle("Merged web.xml written to $mergedWebXmlFile")
+    }
 }

@@ -1,7 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!--
-    Author     : Wiley Fuller <wiley@alltheducks.com>
--->
 <manifest xmlns="http://www.blackboard.com/bb-manifest-plugin"
           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
           xsi:schemaLocation="http://www.blackboard.com/bb-manifest-plugin https://bbprepo.blackboard.com/content/repositories/releases/blackboard/platform/bb-manifest-plugin/9.1.201410.160373/bb-manifest-plugin-9.1.201410.160373.xsd">
@@ -80,14 +77,9 @@
 
 
     <permissions>
-      <!-- Stripes Permissions -->
       <permission type="java.lang.RuntimePermission" name="accessDeclaredMembers" />
       <permission type="java.lang.reflect.ReflectPermission" name="suppressAccessChecks" />
-
-      <!-- Other Permissions -->
-
       <permission type="java.util.logging.LoggingPermission" name="control"/>
-
       <permission type="blackboard.data.AttributePermission" name="user.authinfo" actions="get" />
       <permission type="blackboard.data.AttributePermission" name="user.personalinfo" actions="get" />
       <permission type="blackboard.data.AttributePermission" name="user.cardnumber" actions="get" />
@@ -95,14 +87,10 @@
       <permission type="blackboard.persist.PersistPermission" name="userlifecycleeventpropertyimpl" actions="get" />
       <permission type="blackboard.persist.PersistPermission" name="user" actions="get" />
       <permission type="java.lang.RuntimePermission" name="createClassLoader" />
-
       <permission type="java.lang.RuntimePermission" name="injectRenderingHook" />
-
-      <!-- Logging Permissions -->
-      <permission type="java.io.FilePermission" name="BB_HOME/logs/plugins/-"
-                  actions="write" />
-
-      <!--<permission type="java.io.FilePermission" name="velocity.log" actions="write" />-->
+      <permission type="java.io.FilePermission" name="BB_HOME/logs/plugins/-" actions="write" />
+      <permission type="java.util.PropertyPermission" name="catalina.base" actions="read"/>
+      <permission type="java.io.FilePermission" name="${catalina.base}/-" actions="read,write,delete" />
     </permissions>
   </plugin>
 </manifest>

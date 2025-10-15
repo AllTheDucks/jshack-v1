@@ -11,7 +11,6 @@
 <%@taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <%@taglib uri="http://stripes.sourceforge.net/stripes.tld" prefix="stripes" %>  
-<%@ taglib prefix="json" uri="http://www.atg.com/taglibs/json" %>
 
 
 
