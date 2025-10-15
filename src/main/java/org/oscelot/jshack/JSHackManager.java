@@ -198,6 +198,9 @@ public class JSHackManager {
 
     public XStream getHackPackageXstream() {
         XStream xstream = new XStream(new DomDriver("UTF-8"));
+        xstream.allowTypesByWildcard(new String[] {
+                "org.oscelot.jshack.model.*"
+        });
         xstream.alias("hackpackage", HackPackage.class);
 
         ClassAliasingMapper mapper = new ClassAliasingMapper(xstream.getMapper());
@@ -216,6 +219,9 @@ public class JSHackManager {
 
     public XStream getHackConfigXstream() {
         XStream xstream = new XStream(new DomDriver("UTF-8"));
+        xstream.allowTypesByWildcard(new String[] {
+                "org.oscelot.jshack.model.*"
+        });
         xstream.alias("hackconfig", HackConfig.class);
 
         ClassAliasingMapper mapper = new ClassAliasingMapper(xstream.getMapper());
