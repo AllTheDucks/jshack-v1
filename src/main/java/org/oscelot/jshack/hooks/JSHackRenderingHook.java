@@ -8,17 +8,13 @@ import blackboard.platform.context.Context;
 import blackboard.platform.context.ContextManagerFactory;
 import blackboard.platform.plugin.PlugInUtil;
 import blackboard.servlet.renderinghook.RenderingHook;
-import java.io.IOException;
 import java.io.StringWriter;
 import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import org.apache.commons.lang.exception.ExceptionUtils;
 import org.apache.velocity.VelocityContext;
-import org.apache.velocity.app.Velocity;
 import org.apache.velocity.app.VelocityEngine;
-import org.apache.velocity.runtime.RuntimeConstants;
 import org.oscelot.jshack.BuildingBlockHelper;
 import org.oscelot.jshack.JSHackManager;
 import org.oscelot.jshack.JSHackManagerFactory;
@@ -112,12 +108,7 @@ public abstract class JSHackRenderingHook implements RenderingHook {
         vc.put("context", context);
         StringWriter sw = new StringWriter();
 
-        try {
-            ve.evaluate(vc, sw, "SnippetHtmlString", snippet);
-        } catch (IOException ex) {
-            Logger.getLogger(JSHackRenderingHook.class.getName()).log(Level.SEVERE, null, ex);
-            return "Error in JSHackRenderingHook. See Log for details. (" + ex.getMessage() + ")";
-        }
+        ve.evaluate(vc, sw, "SnippetHtmlString", snippet);
         return sw.toString();
     }
 
@@ -128,13 +119,8 @@ public abstract class JSHackRenderingHook implements RenderingHook {
     private synchronized VelocityEngine createVelocityEngine() {
         if (ve == null) {
             ve = new VelocityEngine();
-            ve.setProperty(RuntimeConstants.RUNTIME_LOG_LOGSYSTEM_CLASS,
-                "org.oscelot.jshack.Slf4jLogChute" );
         }
         return ve;
     }
 
-    public void setVelocityEngine(VelocityEngine ve) {
-        this.ve = ve;
-    }
 }

@@ -53,8 +53,8 @@ dependencies {
     implementation 'com.google.code.gson:gson:2.13.2'
 
     compileOnly 'jstl:jstl:1.2'
-    compileOnly 'org.apache.velocity:velocity:1.5'
-    compileOnly 'commons-io:commons-io:1.4'
+    compileOnly 'org.apache.velocity:velocity-engine-core:2.3'
+    compileOnly 'commons-io:commons-io:2.19.0'
     compileOnly "javax.servlet:javax.servlet-api:4.0.1"
 
     compileOnly 'blackboard.platform:bb-platform:3902.1.0'
