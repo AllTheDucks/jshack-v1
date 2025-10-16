@@ -71,10 +71,19 @@
 
 <bbNG:genericPage title="${title}" ctxId="ctx" >
   <bbNG:cssFile href="css/default.css?2"/>
-  <script type="text/javascript" src="js/ace/ace.js"></script>
-  <bbNG:jsFile href="js/mustache.js"/>
-  <bbNG:jsFile href="js/jshack.js?1"/>
-  <bbNG:jsFile href="/javascript/scriptaculous/version_pinned_scriptaculous.js"/>
+    <script src="https://cdn.jsdelivr.net/npm/mustache@4.2.0/mustache.min.js"
+            integrity="sha384-WASZCYHGuIg0bwkJEH65mhmbKS1x4/VKI2bzElPKmL5B3e0UaH45nIdqOm+BUuRA"
+            crossorigin="anonymous"
+            referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.43.3/ace.min.js"
+            integrity="sha512-BHJlu9vUXVrcxhRwbBdNv3uTsbscp8pp3LJ5z/sw9nBJUegkNlkcZnvODRgynJWhXMCsVUGZlFuzTrr5I2X3sQ=="
+            crossorigin="anonymous" r
+            eferrerpolicy="no-referrer"></script>
+    <bbNG:jsFile href="js/jshack.js?1"/>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/scriptaculous/1.9.0/scriptaculous.min.js"
+            integrity="sha512-74QwpT9VKUg4Ct+SL/ko7CRxUxP6xCGECFJ8tvJeOjv/lIaVuVmHj+0wOdB2nueamUmNT7i/YTrEI/hqPGDqZg=="
+            crossorigin="anonymous"
+            referrerpolicy="no-referrer"></script>
   <bbNG:pageHeader instructions="${pageHelp}">
     <bbNG:breadcrumbBar environment="SYS_ADMIN" >
       <bbNG:breadcrumb href="../blackboard/admin/manage_plugins.jsp" title="${pluginPageStr}" />
@@ -88,27 +97,27 @@
       <bbNG:step title="${stepHackDetailsText}">
         <bbNG:dataElement label="${labelNameText}" isRequired="true">
           <stripes:text name="hack.name" style="width:35em;" />
-        </bbNG:dataElement>      
+        </bbNG:dataElement>
         <bbNG:dataElement label="${labelDescriptionText}" isRequired="true">
           <stripes:text name="hack.description" style="width:35em;" />
-        </bbNG:dataElement>      
+        </bbNG:dataElement>
         <bbNG:dataElement label="${labelIdentifierText}" isRequired="true">
           <stripes:text name="hack.identifier"  disabled="${!empty actionBean.hack.identifier}" maxlength="20" size="20" />
           <c:if test="${!empty actionBean.hack.identifier}">
             <stripes:hidden name="hack.identifier" />
           </c:if>
-        </bbNG:dataElement>      
+        </bbNG:dataElement>
         <bbNG:dataElement label="${labelVersionText}">
           <stripes:text name="hack.version" />
         </bbNG:dataElement>
         <bbNG:dataElement label="${labelMinVersionText}">
           <stripes:text name="hack.targetVersionMin" />
-        </bbNG:dataElement>      
+        </bbNG:dataElement>
         <bbNG:dataElement label="${labelMaxVersionText}">
           <stripes:text name="hack.targetVersionMax" />
-        </bbNG:dataElement>    
+        </bbNG:dataElement>
       </bbNG:step>
-      
+
     <bbNG:step title="${stepDeveloperText}">
         <bbNG:dataElement label="${labelDeveloperNameText}">
           <stripes:text name="hack.developerName" />
@@ -118,10 +127,10 @@
         </bbNG:dataElement>
         <bbNG:dataElement label="${labelDeveloperURLText}">
           <stripes:text name="hack.developerURL" />
-        </bbNG:dataElement>    
+        </bbNG:dataElement>
         <bbNG:dataElement label="${labelDeveloperEmailText}">
           <stripes:text name="hack.developerEmail" />
-        </bbNG:dataElement>      
+        </bbNG:dataElement>
     </bbNG:step>
 
       <bbNG:step title="${stepInjectedContentText}">
@@ -130,7 +139,7 @@
             <div id="snippetEditor"><c:out value="${actionBean.hack.snippet}" escapeXml="true" /></div>
           </div>
           <input type="hidden" name="hack.snippet" id="snippetInput"/>
-        </bbNG:dataElement>      
+        </bbNG:dataElement>
         <bbNG:dataElement label="${labelInjectionPointText}">
           <stripes:select name="hack.hook">
             <stripes:option value="jsp.topFrame.start">${injectionPointTopFrameText}</stripes:option>
@@ -147,7 +156,7 @@
         <bbNG:dataElement label="${labelResourcesText}" >
           <div id="jsh-resources"></div>
           <button id="jsh_addResourceButton">${buttonAddResourceText}</button>
-        </bbNG:dataElement>      
+        </bbNG:dataElement>
       </bbNG:step>
 
       <bbNG:step title="${stepRestrictionsText}">
@@ -189,7 +198,7 @@
         <option value="{{value}}"{{#selected}} selected="true"{{/selected}}>{{name}}</option>
         {{/types}}
       </select>
-      <select name="inverse"><option value="false" {{^inverse}} selected=true {{/inverse}}>${labelInvertNoText}</option><option value="true" {{#inverse}} selected=true {{/inverse}}>${labelInvertYesText}</option></select> ${labelValueText} 
+      <select name="inverse"><option value="false" {{^inverse}} selected=true {{/inverse}}>${labelInvertNoText}</option><option value="true" {{#inverse}} selected=true {{/inverse}}>${labelInvertYesText}</option></select> ${labelValueText}
       <input type="text" name="value" style="width:35em;" value="{{value}}">
       <a href="#" class="removeRestrictionLink">${buttonRemoveRestrictionText}</a>
     </div>

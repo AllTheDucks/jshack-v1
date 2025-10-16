@@ -88,6 +88,7 @@
       <permission type="blackboard.persist.PersistPermission" name="user" actions="get" />
       <permission type="java.lang.RuntimePermission" name="createClassLoader" />
       <permission type="java.lang.RuntimePermission" name="injectRenderingHook" />
+      <permission type="java.net.NetPermission" name="specifyStreamHandler" />
       <permission type="java.io.FilePermission" name="BB_HOME/logs/plugins/-" actions="write" />
       <permission type="java.util.PropertyPermission" name="catalina.base" actions="read"/>
       <permission type="java.io.FilePermission" name="${catalina.base}/-" actions="read,write,delete" />
