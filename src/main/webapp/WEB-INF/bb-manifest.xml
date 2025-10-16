@@ -8,15 +8,15 @@
     <description value="jsh.plugin.description"/>
     <default-locale value="en_GB" />
     <webapp-type value="javaext" />
-    <version value="1.0.16"/>
+    <version value="1.1.0beta1"/>
     <requires>
       <bbversion value="3902.1.0"/>
     </requires>
     <vendor>
       <id value="oslt"/>
-      <name value="Oscelot"/>
-      <url value="http://www.oscelot.org/"/>
-      <description value="Oscelot"/>
+      <name value="All the Ducks"/>
+      <url value="http://alltheducks.com/"/>
+      <description value="JS Hack is maintained by All the Ducks Pty. Ltd. but was originally published under the now defunct OSCELOT organisation."/>
     </vendor>
     <http-actions>
 
