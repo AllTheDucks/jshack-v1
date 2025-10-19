@@ -41,14 +41,6 @@
                    point="blackboard.platform.renderingHook"
                    class="org.oscelot.jshack.hooks.JspFramesetStartHook"
                    singleton="true" />
-        <extension id="jshackTagsGlobalNavPageStartHook"
-                   point="blackboard.platform.renderingHook"
-                   class="org.oscelot.jshack.hooks.TagsGlobalNavPageStartHook"
-                   singleton="true" />
-        <extension id="jshackCourseBreadcrumbControlHook"
-                   point="blackboard.platform.renderingHook"
-                   class="org.oscelot.jshack.hooks.TagCourseBreadcrumbControlHook"
-                   singleton="true" />
       </definition>
     </extension-defs>
 
