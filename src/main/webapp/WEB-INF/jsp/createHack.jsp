@@ -55,8 +55,6 @@
 <fmt:message var="injectionPointFramesetText" key="jsh.injectionPoint.jsp.frameset.start" />
 <fmt:message var="injectionPointLearningSystemPageText" key="jsh.injectionPoint.tag.learningSystemPage.start" />
 <fmt:message var="injectionPointEditModeButtonText" key="jsh.injectionPoint.tag.editModeViewToggle.start" />
-<fmt:message var="injectionPointGlobalNavPageText" key="jsh.injectionPoint.tags.globalNavPage.start" />
-<fmt:message var="injectionPointCourseBreadcrumbText" key="jsh.injectionPoint.tag.course.breadcrumb.control" />
 
 <fmt:message var="restrictionUrlText" key="jsh.restriction.url" />
 <fmt:message var="restrictionEntitlementText" key="jsh.restriction.entitlement" />
@@ -146,8 +144,6 @@
             <stripes:option value="jsp.frameset.start">${injectionPointFramesetText}</stripes:option>
             <stripes:option value="tag.learningSystemPage.start">${injectionPointLearningSystemPageText}</stripes:option>
             <stripes:option value="tag.editModeViewToggle.start">${injectionPointEditModeButtonText}</stripes:option>
-            <stripes:option value="tags.globalNavPage.start">${injectionPointGlobalNavPageText}</stripes:option>
-            <stripes:option value="tag.course.breadcrumb.control">${injectionPointCourseBreadcrumbText}</stripes:option>
           </stripes:select>
         </bbNG:dataElement>
         <bbNG:dataElement label="${labelInjectionPriorityText}">
