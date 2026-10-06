@@ -12,6 +12,9 @@ import com.thoughtworks.xstream.mapper.ClassAliasingMapper;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.nio.file.AtomicMoveNotSupportedException;
+import java.nio.file.Files;
+import java.nio.file.StandardCopyOption;
 import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -25,6 +28,8 @@ import org.oscelot.jshack.model.restrictions.URLRestriction;
  * @author Wiley Fuller <wiley@alltheducks.com>
  */
 public class JSHackManager {
+
+    private static final Logger LOG = Logger.getLogger(JSHackManager.class.getName());
 
     public static final String HACKPACKAGE_FILENAME = "hackpackage.xml";
     public static final String SNIPPET_FILENAME = "snippet.html";
@@ -91,8 +96,7 @@ public class JSHackManager {
      *
      */
     public List<HackPackage> loadHackPackages() throws IOException {
-        XStream configXstream = getHackConfigXstream();
-        hackConfig = (HackConfig) configXstream.fromXML(hackConfigFile);
+        hackConfig = readHackConfig();
 
         ArrayList<HackPackage> reloadedPackages = new ArrayList<HackPackage>();
         hackPackageReferences = new HashMap<String, List<HackPackageReference>>();
@@ -107,7 +111,15 @@ public class JSHackManager {
             File snippetFile = new File(child, SNIPPET_FILENAME);
             if (packageManifest.exists()) {
                 XStream xstream = getHackPackageXstream();
-                HackPackage hackPackage = (HackPackage) xstream.fromXML(packageManifest);
+                HackPackage hackPackage;
+                try {
+                    hackPackage = (HackPackage) xstream.fromXML(packageManifest);
+                } catch (RuntimeException ex) {
+                    // One bad manifest should not take down every other hack.
+                    LOG.log(Level.SEVERE, "Skipping unreadable hack package manifest ["
+                            + packageManifest.getAbsolutePath() + "]", ex);
+                    continue;
+                }
                 hackPackage.setSnippet(FileUtils.readFileToString(snippetFile, "UTF-8"));
                 hackPackage.setEnabled(hackConfig.isPackageEnabled(hackPackage.getIdentifier()));
 
@@ -174,26 +186,65 @@ public class JSHackManager {
         }
         File hackPackageFile = new File(hackDir, HACKPACKAGE_FILENAME);
         File snippetFile = new File(hackDir, SNIPPET_FILENAME);
-        FileOutputStream hackPackageOut = new FileOutputStream(hackPackageFile);
 
         FileUtils.writeStringToFile(snippetFile, hack.getSnippet(), "UTF-8");
 
-        XStream xstream = getHackPackageXstream();
-        xstream.toXML(hack, hackPackageOut);
-        hackPackageOut.close();
+        writeXmlAtomically(hackPackageFile, getHackPackageXstream(), hack);
 
         flagToReloadPackages();
     }
 
     public void persistHackConfig() throws IOException {
-        FileOutputStream hackConfigOut = new FileOutputStream(this.hackConfigFile);
-
-        XStream xstream = this.getHackConfigXstream();
-        xstream.toXML(this.hackConfig, hackConfigOut);
-
-        hackConfigOut.close();
+        writeXmlAtomically(this.hackConfigFile, this.getHackConfigXstream(), this.hackConfig);
 
         this.flagToReloadPackages();
+    }
+
+    /**
+     * Reads hackConfig.xml, falling back to a freshly written default if it is missing,
+     * empty or unparseable. Without this a zero byte config is never replaced, and the
+     * building block stays dead.
+     */
+    private HackConfig readHackConfig() throws IOException {
+        if (hackConfigFile.isFile() && hackConfigFile.length() > 0) {
+            try {
+                return (HackConfig) getHackConfigXstream().fromXML(hackConfigFile);
+            } catch (RuntimeException ex) {
+                LOG.log(Level.SEVERE, "Could not read hack config ["
+                        + hackConfigFile.getAbsolutePath() + "], resetting it to defaults. "
+                        + "Hacks will need to be re-enabled.", ex);
+            }
+        } else if (hackConfigFile.exists()) {
+            LOG.log(Level.SEVERE, "Hack config [" + hackConfigFile.getAbsolutePath()
+                    + "] is empty, resetting it to defaults. Hacks will need to be re-enabled.");
+        }
+
+        HackConfig replacement = new HackConfig();
+        writeXmlAtomically(hackConfigFile, getHackConfigXstream(), replacement);
+        return replacement;
+    }
+
+    /**
+     * Marshals to a temporary file and renames, so a failed write cannot leave the target
+     * truncated. Writing straight to a FileOutputStream empties it first, and anything
+     * thrown after that point leaves an unreadable zero byte document behind.
+     */
+    static void writeXmlAtomically(File target, XStream xstream, Object graph) throws IOException {
+        File temp = File.createTempFile(target.getName(), ".tmp", target.getParentFile());
+        try {
+            try (FileOutputStream out = new FileOutputStream(temp)) {
+                xstream.toXML(graph, out);
+                out.flush();
+            }
+            try {
+                Files.move(temp.toPath(), target.toPath(),
+                        StandardCopyOption.REPLACE_EXISTING, StandardCopyOption.ATOMIC_MOVE);
+            } catch (AtomicMoveNotSupportedException ex) {
+                Files.move(temp.toPath(), target.toPath(), StandardCopyOption.REPLACE_EXISTING);
+            }
+        } finally {
+            Files.deleteIfExists(temp.toPath());
+        }
     }
 
     public XStream getHackPackageXstream() {

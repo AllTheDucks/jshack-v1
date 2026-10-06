@@ -8,7 +8,6 @@ import blackboard.platform.plugin.PlugInException;
 import blackboard.platform.plugin.PlugInUtil;
 import com.thoughtworks.xstream.XStream;
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -53,13 +52,12 @@ public class JSHackManagerFactory {
                 archiveDirectory.mkdir();
             }
             File hackConfigFile = new File(configDir, HACK_CONFIG_FILE_NAME);
-            if (!hackConfigFile.exists()) {
+            // Length as well as existence: this is the only place the file is created, so
+            // a zero byte one would never be replaced.
+            if (!hackConfigFile.isFile() || hackConfigFile.length() == 0) {
                 try {
-                    FileOutputStream hackConfigOut = new FileOutputStream(hackConfigFile);
-
                     XStream xstream = hackManagerInstance.getHackConfigXstream();
-                    xstream.toXML(new HackConfig(), hackConfigOut);
-                    hackConfigOut.close();
+                    JSHackManager.writeXmlAtomically(hackConfigFile, xstream, new HackConfig());
                 } catch (IOException ex) {
                     Logger.getLogger(JSHackManagerFactory.class.getName()).log(Level.SEVERE, null, ex);
                     throw new RuntimeException("Problem while trying to create hackConfig.xml", ex);

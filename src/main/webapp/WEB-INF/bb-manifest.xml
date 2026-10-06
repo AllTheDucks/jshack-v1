@@ -1,21 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <manifest xmlns="http://www.blackboard.com/bb-manifest-plugin"
           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-          xsi:schemaLocation="http://www.blackboard.com/bb-manifest-plugin https://bbprepo.blackboard.com/repository/releases/blackboard/platform/bb-manifest-plugin/3902.1.0/bb-manifest-plugin-3902.1.0.xsd">
+          xsi:schemaLocation="http://www.blackboard.com/bb-manifest-plugin https://bbprepo.blackboard.com/repository/releases/blackboard/platform/bb-manifest-plugin/4001.0.0/bb-manifest-plugin-4001.0.0.xsd">
   <plugin>
     <name value="jsh.plugin.name"/>
     <handle value="jshack"/>
     <description value="jsh.plugin.description"/>
     <default-locale value="en_GB" />
     <webapp-type value="javaext" />
-    <version value="1.1.0"/>
+    <version value="1.1.2"/>
     <requires>
-      <bbversion value="3902.1.0"/>
+      <bbversion value="4001.0.0"/>
     </requires>
     <vendor>
       <id value="oslt"/>
       <name value="All the Ducks"/>
-      <url value="http://alltheducks.com/"/>
+      <url value="https://alltheducks.com/"/>
       <description value="JS Hack is maintained by All the Ducks Pty. Ltd. but was originally published under the now defunct OSCELOT organisation."/>
     </vendor>
     <http-actions>

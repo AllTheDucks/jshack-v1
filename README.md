@@ -14,3 +14,9 @@ JS Hack uses SLF4J/Logback for logging. Libraries utilised by the tool which use
 Support for Java 21 was added in version 1.1.0.
 
 The work required to support Java 21 was sponsored by [Università Bocconi Milano](https://www.unibocconi.it/en).
+
+# Blackboard 4001 Support #
+
+Support for Blackboard 4001.0.0, which runs on Jakarta EE and Tomcat 11, was added in version 1.1.2. Earlier versions of Blackboard need JS Hack 1.1.0.
+
+The work required to support Blackboard 4001 was sponsored by [Università Bocconi Milano](https://www.unibocconi.it/en).
